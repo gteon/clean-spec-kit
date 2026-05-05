@@ -26,7 +26,8 @@ Who needs this, and what problem does it solve?
 
 ## Design Pattern Notes
 
-What pattern seems appropriate, and why?
+What pattern seems appropriate for the behavior, expected growth, extension
+points, and testing needs?
 
 ## Testing Notes
 

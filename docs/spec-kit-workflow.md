@@ -44,6 +44,7 @@ The plan must define:
 - Language and framework once chosen
 - Clean architecture structure
 - Use-case design patterns
+- Expected growth and extension points for each pattern
 - Ports and adapters
 - Storage and external systems
 - AI-provider boundaries
@@ -75,4 +76,4 @@ Run consistency analysis before coding:
 Implement in task order.
 
 Do not skip tests. Do not bypass architecture boundaries. Do not add patterns that
-were not justified in the plan.
+were not justified by fit, extension path, and test strategy in the plan.

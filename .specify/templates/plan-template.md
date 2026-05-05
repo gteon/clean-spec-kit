@@ -48,8 +48,9 @@
   UI, database, network, framework, or AI-provider code; use cases define ports;
   adapters isolate external systems; framework code remains at the outer edge.
 - **Pattern fitness per use case**: For each use case, name the chosen pattern
-  (plain function/service, command, strategy, repository, adapter, factory, etc.)
-  and justify why it is simpler or safer than the alternatives.
+  (use case/interactor, specification, pipeline, chain of responsibility,
+  composite, command, strategy, repository, adapter, builder, factory, etc.) and
+  justify why it fits the behavior, expected growth, extension points, and tests.
 - **Traceability and operations**: Ensure planned tasks can trace to stories,
   requirements, contracts, entities, or cross-cutting concerns, and include logging,
   error handling, configuration, security, and performance work when relevant.
@@ -124,9 +125,9 @@ reference the real directories captured above]
 
 ## Use-Case Design
 
-| Use Case | Pattern / Structure | Boundary Ports | Why This Pattern Fits | Simpler Alternative Rejected |
-|----------|---------------------|----------------|-----------------------|------------------------------|
-| [UC-001] | [e.g., Interactor + Repository Port] | [Input/output ports] | [Rationale] | [Alternative and reason] |
+| Use Case | Pattern / Structure | Boundary Ports | Expected Growth / Extension Points | Why This Pattern Fits | Tradeoffs / Risks |
+|----------|---------------------|----------------|------------------------------------|-----------------------|-------------------|
+| [UC-001] | [e.g., Interactor + Specification + Repository Port] | [Input/output ports] | [Rules/providers/screens likely to grow] | [Fit rationale] | [Accepted tradeoffs] |
 
 ## Test Strategy
 
@@ -136,11 +137,11 @@ reference the real directories captured above]
 | Use cases | Each use case has behavior tests for success and failure paths | tests/unit/application/ or tests/integration/ |
 | Boundaries | Ports, adapters, contracts, and dependency rules are verified | tests/contract/, tests/integration/, tests/architecture/ |
 
-## Complexity Tracking
+## Design Fit & Exception Tracking
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., domain depends on framework type] | [current need] | [why a port/adapter is insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct persistence access is sufficient or insufficient] |
+| Decision or Exception | Why It Fits | Extension Point Protected | Tradeoffs / Risks |
+|-----------------------|-------------|---------------------------|-------------------|
+| [e.g., domain depends on framework type] | [current need] | [future change supported] | [risk and mitigation] |
+| [e.g., Pipeline for validation rules] | [specific behavior] | [how 5 rules can grow to 50] | [cost and mitigation] |

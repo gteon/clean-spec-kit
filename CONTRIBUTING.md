@@ -22,7 +22,8 @@ correct while hiding architectural coupling or missing test coverage.
   `tasks.md`.
 - Follow clean architecture boundaries unless the plan documents a justified
   exception.
-- Use the simplest design pattern that fits the use case.
+- Use the design pattern that best fits the use case, expected growth, extension
+  points, and testing needs.
 - Do not introduce a repository, factory, strategy, event bus, or service layer
   only because it is familiar.
 - Every implemented function must have automated coverage for normal behavior,

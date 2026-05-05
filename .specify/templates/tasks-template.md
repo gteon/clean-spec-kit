@@ -247,4 +247,4 @@ Examples of foundational tasks (adjust based on your project):
 - Verify tests fail before implementing
 - Commit after each task or logical group
 - Stop at checkpoints to validate independently
-- Avoid: vague tasks, same-file conflicts, cross-story dependencies that break independence, and patterns without a use-case rationale
+- Avoid: vague tasks, same-file conflicts, cross-story dependencies that break independence, and patterns without fit, extension, and test rationale

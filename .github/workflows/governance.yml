@@ -44,6 +44,7 @@ jobs:
             "docs/spec-kit-workflow.md"
             "docs/ai-generated-code-policy.md"
             "docs/project-structures.md"
+            "docs/design-patterns.md"
             "docs/decisions/README.md"
             "docs/decisions/0000-template.md"
             "checklists/architecture-review.md"
@@ -79,6 +80,21 @@ jobs:
           if grep -RInE "OPTIONAL - only if tests requested|Tests \(if included\)|Additional unit tests \(if requested\)" \
             .specify/templates AGENTS.md CLAUDE.md docs checklists; then
             echo "Found stale optional-test language." >&2
+            exit 1
+          fi
+
+          bad_design_language=(
+            "s""implest pattern"
+            "s""impler alternative"
+            "s""mallest useful pattern"
+            "design pattern is the s""implest"
+            "future ""speculation"
+          )
+          bad_design_regex=$(IFS='|'; echo "${bad_design_language[*]}")
+
+          if grep -RInE "$bad_design_regex" \
+            .specify/memory .specify/templates AGENTS.md CLAUDE.md README.md CONTRIBUTING.md docs checklists .github; then
+            echo "Found design-pattern language that does not match fit-first extensibility rules." >&2
             exit 1
           fi
 

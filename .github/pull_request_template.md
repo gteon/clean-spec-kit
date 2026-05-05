@@ -16,7 +16,8 @@ Describe the change in product terms.
 - Layers changed:
 - Design pattern used:
 - Why this pattern fits:
-- Simpler alternative considered:
+- Expected growth or extension point supported:
+- Tradeoffs or risks accepted:
 
 ## Reuse and Extensibility
 

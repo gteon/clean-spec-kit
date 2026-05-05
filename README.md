@@ -16,7 +16,8 @@ system:
 
 - Spec Kit artifacts define scope before code.
 - Clean architecture keeps business rules independent.
-- Design patterns must fit the use case, not personal preference.
+- Design patterns must fit the use case, expected growth, extension points, and
+  testing needs.
 - Every implemented function must be testable and covered.
 - New screens and components should reuse existing classes, components, files, and
   use cases.
@@ -176,20 +177,35 @@ See [docs/architecture.md](docs/architecture.md) and
 
 ## Design Pattern Standard
 
-Use the simplest pattern that fits the use case:
+Choose the pattern that best fits the use case. The right pattern is the one that
+models the behavior, supports expected growth, keeps tests focused, and allows new
+rules, screens, providers, and workflows to be added safely.
 
 | Need | Typical Pattern |
 |------|-----------------|
-| Pure calculation or validation | Plain function |
 | User workflow | Use case / interactor |
 | External dependency | Port and adapter |
 | Persistence abstraction | Repository |
+| Expandable business rules | Specification |
+| Many rules that can be combined | Composite |
+| Ordered validation/enrichment steps | Pipeline |
+| Sequential handlers or fallbacks | Chain of Responsibility |
 | Swappable algorithm or provider policy | Strategy |
-| Complex construction | Factory |
+| Auditable action or queued work | Command |
+| Construction with many valid options | Builder |
+| Conditional object creation | Factory |
+| Related provider/component families | Abstract Factory |
+| Cross-cutting behavior around a port/use case | Decorator |
+| Stable API over multiple subsystems | Facade |
+| Independent reactions to domain/application events | Observer / Event Publisher |
+| Lifecycle-specific behavior | State |
 | UI formatting | Presenter or view model |
 
-Every non-trivial pattern must be named in the plan and justified against a
-simpler alternative.
+Every non-trivial pattern must be named in the plan and justified by fit:
+behavior modeled, extension path, test strategy, and tradeoffs. If 5 rules today
+may become 50 tomorrow, choose a pattern that makes adding rule 51 safe.
+
+See [docs/design-patterns.md](docs/design-patterns.md).
 
 ## Testing Standard
 

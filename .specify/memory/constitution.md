@@ -3,7 +3,7 @@ Sync Impact Report
 Version change: 1.0.0 -> 1.1.0
 Modified principles:
 - III. Verification Is Planned Before Implementation (expanded to require function-level automated tests)
-- IV. Plans Capture Technical Decisions (expanded for pattern justification)
+- IV. Plans Capture Technical Decisions (expanded for fit-for-purpose pattern and extension rationale)
 Added sections:
 - VI. Clean Architecture Boundaries Are Mandatory
 Removed sections:
@@ -17,6 +17,7 @@ Templates requiring updates:
 - Updated CLAUDE.md
 - Added README.md, CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md, SUPPORT.md, CHANGELOG.md, and LICENSE
 - Added docs/, checklists/, and GitHub governance templates
+- Added docs/design-patterns.md and removed simplicity-first pattern language
 Follow-up TODOs:
 - None
 -->
@@ -68,12 +69,12 @@ checklists with no reliable proof of behavior.
 ### IV. Plans Capture Technical Decisions
 
 Implementation plans MUST record the chosen architecture, technology context,
-project structure, constraints, dependencies, design patterns, and complexity
-tradeoffs before task generation. Each use case MUST name the design pattern or
-plain structure it uses and explain why that choice fits the behavior. Any choice
-that adds complexity, expands scope, changes a contract, introduces a new
-dependency, or applies a non-trivial design pattern MUST include the simpler
-alternative considered and the reason it was rejected.
+project structure, constraints, dependencies, design patterns, and tradeoffs before
+task generation. Each use case MUST name the design pattern or structure it uses
+and explain why that choice fits the behavior, expected growth, extension points,
+and test strategy. Any choice that expands scope, changes a contract, introduces a
+new dependency, or applies a non-trivial design pattern MUST document the design
+forces considered, the extension path it protects, and the operational risks.
 
 Rationale: Design decisions need to be reviewable before they become scattered
 across code and generated tasks.
@@ -124,7 +125,8 @@ The Constitution Check in every implementation plan MUST pass before Phase 0
 research starts and MUST be rechecked after Phase 1 design. Reviews MUST confirm
 that specifications, plans, and tasks remain aligned with this constitution before
 implementation begins. If a feature violates a principle, the plan MUST document the
-violation, the reason it is necessary, and the simpler alternative that was rejected.
+violation, the reason it is necessary, the extension path it protects, and the
+tradeoffs accepted.
 
 Implementation MUST proceed in dependency order: setup, foundational work, P1 MVP,
 then later stories by priority unless parallel execution is explicitly safe. Each
@@ -151,6 +153,6 @@ Versioning follows semantic versioning:
 
 Compliance review is required during plan creation, after design artifacts are
 produced, and before implementation is considered complete. Non-compliance MUST be
-resolved or documented in the plan's Complexity Tracking section.
+resolved or documented in the plan's Design Fit & Exception Tracking section.
 
 **Version**: 1.1.0 | **Ratified**: 2026-05-05 | **Last Amended**: 2026-05-05

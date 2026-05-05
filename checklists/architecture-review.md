@@ -7,7 +7,7 @@ Use this checklist before implementation starts and before merging code.
 - [ ] The change traces to a user story, requirement, task, or documented
       cross-cutting concern.
 - [ ] The current plan names the architecture and use-case pattern.
-- [ ] Any architecture exception is documented in Complexity Tracking.
+- [ ] Any architecture exception is documented in Design Fit & Exception Tracking.
 
 ## Clean Architecture
 
@@ -22,8 +22,9 @@ Use this checklist before implementation starts and before merging code.
 
 - [ ] Each non-trivial pattern is named.
 - [ ] The selected pattern fits the use case.
-- [ ] A simpler alternative was considered.
-- [ ] No pattern was added only for future speculation.
+- [ ] Expected growth and extension points were considered.
+- [ ] The selected pattern makes future additions safer, not more fragile.
+- [ ] Tradeoffs and risks are documented.
 
 ## Reuse
 

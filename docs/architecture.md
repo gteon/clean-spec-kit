@@ -89,19 +89,33 @@ output into presentation output.
 
 ## Pattern Selection
 
-Use the smallest useful pattern:
+Choose the pattern that best models the domain behavior and expected evolution.
+The right pattern is the one that preserves clean architecture boundaries, keeps
+the code testable, and lets future rules, screens, providers, and workflows be
+added without rewriting stable code.
 
 | Problem | Preferred Pattern |
 |---------|-------------------|
-| Pure calculation | Plain function |
+| Pure calculation | Domain function |
 | User workflow | Use case/interactor |
 | External dependency | Port and adapter |
 | Data retrieval/storage | Repository when it hides persistence details |
+| Expandable business rules | Specification, Composite, or Chain of Responsibility |
+| Ordered processing stages | Pipeline |
 | Swappable algorithm | Strategy |
+| Auditable user action | Command |
+| Stepwise construction | Builder |
 | Complex object construction | Factory |
+| Provider family construction | Abstract Factory |
+| Layered cross-cutting behavior | Decorator |
+| Stable API over subsystems | Facade |
+| Independent reactions to events | Observer/Event Publisher |
+| Lifecycle-specific behavior | State |
 | UI formatting | Presenter or view model |
 
-If the simpler option works and remains testable, use it.
+If 5 rules today may become 50 rules tomorrow, prefer a pattern that makes adding
+the next rule a new class/configuration/stage instead of a risky edit to existing
+conditionals.
 
 ## Architecture Tests
 

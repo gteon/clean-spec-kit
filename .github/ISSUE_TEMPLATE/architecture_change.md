@@ -18,9 +18,10 @@ Describe the boundary, pattern, dependency, or structure change.
 
 - 
 
-## Simpler Alternative
+## Fit and Extensibility Rationale
 
-What simpler option was considered, and why is it not enough?
+Why does this design fit the behavior, expected growth, extension points, and test
+strategy?
 
 ## Testing and Enforcement
 

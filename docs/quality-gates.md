@@ -16,7 +16,8 @@ Quality gates define what must be true before code is considered ready.
 
 - The change maps to a task.
 - The code follows clean architecture boundaries.
-- The design pattern is the simplest one that fits the use case.
+- The design pattern fits the use case, expected growth, extension points, and
+  test strategy.
 - Existing components/classes/functions were reused where their contracts fit.
 - New behavior has automated tests.
 - Relevant tests were run.

@@ -62,26 +62,48 @@ rules.
 
 ## Design Pattern Rules
 
-Use the simplest pattern that fits the use case. Do not add patterns for style or
-future speculation.
+Use the pattern that best fits the use case, domain behavior, expected growth,
+extension points, testing strategy, and clean architecture boundaries. AI agents
+should not avoid complete patterns because they require more files; the priority is
+future-safe extensibility and maintainable change.
 
 Common choices:
 
-- Plain function: pure calculation or simple validation with no orchestration.
+- Domain function: pure calculation or validation with no orchestration.
 - Use case/interactor: application workflow, authorization boundary, transaction,
   or side-effect orchestration.
 - Port and adapter: database, AI provider, network service, file system, clock,
   random generator, queue, or any external dependency.
 - Repository: persistence abstraction for aggregate or entity retrieval/storage.
+- Specification: business rules that must be combined, reused, or expanded.
+- Pipeline: ordered processing stages, validation stages, enrichment, or AI output
+  processing.
+- Chain of Responsibility: rule handlers or fallback handlers that can grow over
+  time.
+- Composite: hierarchical rules, menus, screens, permissions, or nested structures.
 - Strategy: interchangeable algorithm, policy, ranking, prompt strategy, or
   provider behavior.
+- Command: actions that need validation, authorization, queuing, undo, retry, or
+  auditability.
+- Builder: construction with many optional parts, steps, or valid combinations.
 - Factory: construction is complex, conditional, or must hide infrastructure
   details.
+- Abstract Factory: related families of adapters, components, or provider-specific
+  implementations.
+- Decorator: layered behavior such as logging, caching, retries, metrics, or
+  authorization around an existing port/use case.
+- Facade: stable API over multiple subsystems or external provider details.
+- Observer/Event Publisher: domain or application events consumed by independent
+  subscribers.
+- State: workflows where valid behavior changes by lifecycle state.
 - Presenter/view model: UI-specific formatting that must stay out of domain and
   use cases.
 
 Every non-trivial pattern must be named in the plan or task context and justified
-against the simpler alternative.
+by fit: behavior modeled, extension path, test strategy, and tradeoffs.
+
+Use `docs/design-patterns.md` as the pattern catalog when planning or reviewing
+implementation choices.
 
 ## Testing Rules
 
