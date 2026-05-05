@@ -1,0 +1,126 @@
+name: Governance
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  starter-governance:
+    name: Starter governance checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required starter files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "README.md"
+            "CONTRIBUTING.md"
+            "SECURITY.md"
+            "CODE_OF_CONDUCT.md"
+            "SUPPORT.md"
+            "CHANGELOG.md"
+            "LICENSE"
+            ".editorconfig"
+            ".gitattributes"
+            ".gitignore"
+            "AGENTS.md"
+            "CLAUDE.md"
+            ".specify/memory/constitution.md"
+            ".specify/templates/plan-template.md"
+            ".specify/templates/spec-template.md"
+            ".specify/templates/tasks-template.md"
+            "docs/architecture.md"
+            "docs/testing-strategy.md"
+            "docs/quality-gates.md"
+            "docs/spec-kit-workflow.md"
+            "docs/ai-generated-code-policy.md"
+            "docs/project-structures.md"
+            "docs/decisions/README.md"
+            "docs/decisions/0000-template.md"
+            "checklists/architecture-review.md"
+            "checklists/test-coverage-review.md"
+            "checklists/ai-code-review.md"
+            "checklists/release-readiness.md"
+            ".github/pull_request_template.md"
+            ".github/ISSUE_TEMPLATE/feature_request.md"
+            ".github/ISSUE_TEMPLATE/bug_report.md"
+            ".github/ISSUE_TEMPLATE/architecture_change.md"
+            ".github/ISSUE_TEMPLATE/config.yml"
+            ".github/workflows/governance.yml"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "Missing required file: $file" >&2
+              exit 1
+            fi
+          done
+
+      - name: Validate governance language
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          grep -q "Clean Architecture Boundaries Are Mandatory" .specify/memory/constitution.md
+          grep -q "Every function" .specify/templates/tasks-template.md
+          grep -q "Use-Case Design" .specify/templates/plan-template.md
+          grep -q "Testing Rules" AGENTS.md
+          grep -q "Testing Rules" CLAUDE.md
+
+          if grep -RInE "OPTIONAL - only if tests requested|Tests \(if included\)|Additional unit tests \(if requested\)" \
+            .specify/templates AGENTS.md CLAUDE.md docs checklists; then
+            echo "Found stale optional-test language." >&2
+            exit 1
+          fi
+
+          if grep -RInE "src/models|src/services|models/.*services/" .specify/templates docs; then
+            echo "Found generic models/services layering instead of clean architecture guidance." >&2
+            exit 1
+          fi
+
+      - name: Validate no committed secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          forbidden_files_regex='(^|/)(\.env($|\.)|\.envrc$|\.npmrc$|\.pypirc$|\.netrc$|id_rsa($|\.)|id_ed25519($|\.))|(^|/)(secrets\..*|.*\.(secret|secrets|p12|pfx|p8|pem|key|env))$'
+
+          while IFS= read -r file; do
+            if [[ "$file" == ".env.example" || "$file" == */.env.example ]]; then
+              continue
+            fi
+
+            if [[ "$file" =~ $forbidden_files_regex ]]; then
+              echo "Forbidden secret-like file is tracked: $file" >&2
+              exit 1
+            fi
+          done < <(git ls-files)
+
+          private_key_pattern='-----BEGIN (RSA |OPENSSH |DSA |EC |PGP )?PRIVATE[ ]KEY-----'
+          token_pattern='AKIA[0-9A-Z]{16}|xox[baprs]-[A-Za-z0-9-]{10,}|gh[pousr]_[A-Za-z0-9_]{20,}'
+
+          if git grep -nIE -e "$private_key_pattern|$token_pattern" -- . ':!*.md' ':!.gitignore'; then
+            echo "Potential hardcoded secret detected." >&2
+            exit 1
+          fi
+
+      - name: Validate markdown basics
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r file; do
+            if [[ ! -s "$file" ]]; then
+              echo "Markdown file is empty: $file" >&2
+              exit 1
+            fi
+          done < <(find . -name "*.md" -not -path "./.git/*" -print)

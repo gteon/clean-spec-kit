@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-Guidance for Claude and other AI coding agents working in this repository.
+Guidance for Codex and other coding agents working in this repository.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,

@@ -90,6 +90,10 @@
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 
+Each requirement MUST trace to at least one user story, acceptance scenario, or
+cross-cutting concern. Requirements MUST describe observable behavior or constraints
+without mandating implementation details unless the detail is itself a requirement.
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
